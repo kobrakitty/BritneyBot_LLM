@@ -5,7 +5,7 @@ import pandas as pd
 import requests
 import os
 
-API_URL = os.getenv('API_URL', 'http://localhost:8000')
+API_URL = os.getenv('API_URL', 'https://britney-the-statistician.onrender.com')
 
 # Load the data
 @st.cache_data
