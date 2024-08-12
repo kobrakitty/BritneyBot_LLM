@@ -11,6 +11,10 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
+@app.get("/")
+async def root():
+    return {"message": "Welcome to Britney's Statistical Paradise! 🎤📊"}
+
 # Load and format the CSV data
 data = pd.read_csv('studentgrades.csv')
 formatted_data = data.to_string(index=False)
