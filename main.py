@@ -5,6 +5,29 @@ import subprocess
 import logging
 import os
 import json
+import platform
+import subprocess
+
+def run_ollama_model(prompt):
+    """Run the Ollama model on the given prompt."""
+    try:
+        if platform.system() == "Windows":
+            command = f"ollama run llama3:8b \"{prompt}\""
+        else:
+            command = f"ollama run llama3:8b '{prompt}'"
+        
+        print(f"Running command: {command}")
+        result = subprocess.run(command, capture_output=True, text=True, shell=True)
+        print(f"Subprocess output: {result.stdout}")
+        print(f"Subprocess error (if any): {result.stderr}")
+        return result.stdout
+    except Exception as e:
+        print(f"Error running subprocess: {e}")
+        return ""
+
+print("Current PATH:", os.environ.get('PATH'))
+print("Current working directory:", os.getcwd())
+print("Operating System:", platform.system())
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
