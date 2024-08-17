@@ -19,7 +19,7 @@ COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Pull the Llama3 model
-RUN ollama pull llama3:8b
+RUN ollama pull llama3
 
 # Make port 10000 available to the world outside this container
 EXPOSE 10000

@@ -1,12 +1,10 @@
 import os
 import platform
-import subprocess
 import logging
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import pandas as pd
 from langchain_community.llms import Ollama
-
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
