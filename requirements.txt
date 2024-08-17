@@ -1,8 +1,4 @@
 fastapi
 uvicorn
 pandas
-langchain-openai
-langchain-community
-faiss-cpu
-sentence-transformers
-pillow
+python-multipart
