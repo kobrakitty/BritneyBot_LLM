@@ -13,19 +13,20 @@ def load_data():
 
 data = load_data()
 
-st.title("Britney Spears: Pop Star Statistician 🎤📊")
+st.title("BritneyBot: Pop Star Statistician 💃🎤✨📊✨📈✨")
 st.write("Ask me about the student grades data below, and I'll answer as Britney!")
 
 # Add some Britney-themed decorations
+st.sidebar.title("Hi, Cuties! It's me, BritneyBot💋")
 st.sidebar.image("britneybot2.jpg", use_column_width=True)
-st.sidebar.write("Besides studying statistics, my other fave thing is makin' music! What are my top favorite songs, EVER?? I'm so glad you asked! My fave songs...!:")
+st.sidebar.write("I'm so glad you're here! Even though I love studying, I also love making pop music! What are my top favorite songs, EVER?? I'm so glad you asked!:")
 st.sidebar.write("💖 ...Baby One More Time 💖")
-st.sidebar.write("🎵 Oops!... I Did It Again 🎵")
-st.sidebar.write("💃 Toxic 💃")
-st.sidebar.write("🌟 Gimme More 🌟")
+st.sidebar.write("👗 Oops!... I Did It Again 👗")
+st.sidebar.write("🐍 Toxic 🐍")
+st.sidebar.write("🥀 Gimme More 🥀")
 
 # User input
-user_question = st.text_input("What's your question about the data?")
+user_question = st.text_input("Okay let's do this! What's your question about the student grades data?🤔")
 
 if user_question:
     try:
@@ -41,8 +42,9 @@ if user_question:
         st.error(f"Unable to reach the API. Error: {e}")
 
 # Display the data
-st.subheader("Student Grades Data")
+st.subheader("Student Grades Data📑 ")
 st.dataframe(data)
 
 #Footer styling
-st.write("I'm an AI bot built by built by Glitter Pile AI. I have been trained as a statistician that can answer questions about this data in a fun and emoji-filled way! Hope you enjoyed your chat with me! xo, BritneyBot")
+st.write("I am AI bot built by built by Glitter Pile AI using Ollama model llama3. I have been trained to answer questions about this sample data set in a fun and emoji-filled way! Hope you enjoyed your chat with me! xo💋BritneyBot")
+st.write("*Visit www.glitterpile.blog for more fun things!*")
