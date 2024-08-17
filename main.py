@@ -9,6 +9,9 @@ import requests
 
 app = FastAPI()
 
+# Near the top of your main.py file
+OLLAMA_URL = os.getenv('OLLAMA_URL', 'http://localhost:11434')
+
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
