@@ -47,7 +47,7 @@ def query_model(query: Query):
 def run_ollama_model(prompt):
     try:
         # Use an environment variable for the Ollama server URL
-        ollama_url = os.getenv('OLLAMA_URL', 'https://6bea-2600-1700-f7c1-14d0-49c-8e7f-81c3-fbb2.ngrok-free.app/query') 
+        ollama_url = os.getenv('OLLAMA_URL', '6bea-2600-1700-f7c1-14d0-49c-8e7f-81c3-fbb2.ngrok-free.app') 
         response = requests.post(f"{ollama_url}/api/generate", json={"prompt": prompt})
         
         if response.status_code == 200:
