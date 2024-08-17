@@ -9,4 +9,4 @@
 <br>📋Simple data analysis of a sample data set (Student Grades)</br>
 
 <br>....✏️Instructions coming soon, either here or linked to my blog at www.glitterpile.blog.</br>
-<br>🌟Special thanks to the Lonely Octopus Program, teachers, mentors, and Discord community for all of your support! Learn more about their AI and data science program here: www.lonelyoctopus.com.🐙</br>
+<br>🌟Special thanks to the 🐙Lonely Octopus Program🐙, teachers, mentors, and Discord community for all of your support! Learn more about their AI and data science program here: www.lonelyoctopus.com</br>
