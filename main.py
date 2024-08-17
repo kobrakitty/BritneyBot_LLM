@@ -7,6 +7,7 @@ from pydantic import BaseModel
 import pandas as pd
 from langchain_community.llms import Ollama
 
+
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -72,5 +73,5 @@ def process_query(query: str) -> str:
 
 if __name__ == "__main__":
     import uvicorn
-    port = int(os.environ.get("PORT", 8000))
+    port = int(os.environ.get("PORT", 10000))
     uvicorn.run(app, host="0.0.0.0", port=port)
