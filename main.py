@@ -10,7 +10,7 @@ import requests
 app = FastAPI()
 
 # Near the top of your main.py file
-OLLAMA_URL = os.getenv('OLLAMA_URL', '49cd-2600-1700-f7c1-14d0-f1f0-c68a-427c-81d0.ngrok-free.app')
+OLLAMA_URL = os.getenv('OLLAMA_URL', 'https://f384-99-91-159-144.ngrok-free.app/')
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
