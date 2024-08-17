@@ -7,3 +7,4 @@ langchain_openai
 langchain-community
 langchain
 streamlit
+requests

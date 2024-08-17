@@ -9,17 +9,12 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Ollama
-RUN curl https://ollama.ai/install.sh | sh
-
 # Copy the current directory contents into the container at /app
 COPY . /app
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Pull the Llama3 model
-RUN ollama pull llama3
 
 # Make port 10000 available to the world outside this container
 EXPOSE 10000
