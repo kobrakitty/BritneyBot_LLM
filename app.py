@@ -18,7 +18,7 @@ st.write("Ask me about the student grades data below, and I'll answer as Britney
 
 # Add some Britney-themed decorations
 st.sidebar.image("britneybot2.jpg", use_column_width=True)
-st.sidebar.write("Besides LOVING math and statistics, my other fave thing is makin' music! What are my top favorite songs, EVER?? I'm so glad you asked! My fave songs...!:")
+st.sidebar.write("Besides studying statistics, my other fave thing is makin' music! What are my top favorite songs, EVER?? I'm so glad you asked! My fave songs...!:")
 st.sidebar.write("💖 ...Baby One More Time 💖")
 st.sidebar.write("🎵 Oops!... I Did It Again 🎵")
 st.sidebar.write("💃 Toxic 💃")

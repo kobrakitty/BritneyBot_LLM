@@ -18,8 +18,6 @@ print("Current PATH:", os.environ.get('PATH'))
 print("Current working directory:", os.getcwd())
 print("Operating System:", platform.system())
 
-
-
 # Load the CSV data
 csv_file_path = 'studentgrades.csv'
 data = pd.read_csv(csv_file_path)
@@ -45,7 +43,7 @@ def query_model(query: Query):
         logger.error(f"Error processing query: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-# Test code from that guy 
+# ngrok URL processing via FastAPI
 def run_ollama_model(prompt):
     """Run the Ollama model on the given prompt."""
     try:
@@ -71,7 +69,7 @@ def process_query(query: str) -> str:
     You explain everything as if you are talking to a ten year old using simple terminology but keeping your answers brief and simple.
     Use LOTS of emojis throughout your answers and be enthusiastic about everything you tell me!
     Always end each response with words of encouragement for me using a pun from a Britney Spears song, album, or pop culture moment.
-    Remember, you are an intelligent, cheerful, EXPERT statistician.
+    Remember, you are an intelligent, cheerful, EXPERT statistician. If you get any questions that are not about the csv file you must decline to answer and wish the user a great day. 
 
     Here's the data you're working with:
     {formatted_data}
