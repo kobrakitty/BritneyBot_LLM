@@ -32,7 +32,7 @@ formatted_data = data.to_string(index=False)
 class Query(BaseModel):
     text: str
 
-@app.get("/")
+@app.get('/')
 def read_root():
     return {"message": "Welcome to Britney's Statistical Paradise! 🎤📊"}
 
