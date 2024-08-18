@@ -10,7 +10,7 @@ import requests
 app = FastAPI()
 
 # Near the top of your main.py file
-OLLAMA_URL = os.getenv('OLLAMA_URL', 'https://098e-2600-1700-f7c1-14d0-38af-15a1-5646-46ac.ngrok-free.app/query/')
+OLLAMA_URL = os.getenv('OLLAMA_URL', 'https://098e-2600-1700-f7c1-14d0-38af-15a1-5646-46ac.ngrok-free.app')
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
@@ -49,7 +49,7 @@ def query_model(query: Query):
 # ngrok URL processing via FastAPI
 def run_ollama_model(prompt):
     try:
-        ollama_url = os.getenv('OLLAMA_URL')
+        ollama_url = os.getenv('OLLAMA_URL', OLLAMA_URL)
         if not ollama_url:
             raise ValueError("OLLAMA_URL environment variable is not set")
         
@@ -88,9 +88,9 @@ def process_query(query: str) -> str:
         result = run_ollama_model(prompt)
         logger.debug(f"Ollama output: {result}")
         return result if result else "I'm sorry, there was no response from Ollama😢. Try again!"
-    except Exception as e:
-        logger.error(f"Error running Ollama: {e}")
-        return f"Error: {e}"
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Request failed: {e}")
+        return ""
     
 if __name__ == "__main__":
     import uvicorn
