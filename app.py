@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import os
 
-API_URL = os.getenv('API_URL', 'https://britneybot-llm.onrender.com/')
+API_URL = os.getenv('API_URL', 'https://britneybot-llm.onrender.com')
 
 # Load the data
 @st.cache_data
