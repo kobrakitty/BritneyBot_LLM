@@ -36,7 +36,7 @@ class Query(BaseModel):
 def read_root():
     return {"message": "Welcome to Britney's Statistical Paradise! 🎤📊"}
 
-@app.post("/query/")
+@app.post('/query/')
 def query_model(query: Query):
     try:
         result = process_query(query.text)
