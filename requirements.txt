@@ -3,8 +3,5 @@ pydantic
 uvicorn
 pandas
 python-multipart
-langchain_openai
-langchain-community
-langchain
 streamlit
 requests
