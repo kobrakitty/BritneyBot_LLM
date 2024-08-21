@@ -47,7 +47,7 @@ def run_ollama_model(prompt):
     """Run the Ollama model on the given prompt."""
     try:
         # For DEPLOYMENT, uncomment this line for the ngrok URL - always change this when ngrok restarts with free version:
-        OLLAMA_URL = 'https://762c-2600-1700-f7c1-14d0-cc3c-744c-483a-ce1a.ngrok-free.app'
+        OLLAMA_URL = 'https://762c-2600-1700-f7c1-14d0-cc3c-744c-483a-ce1a.ngrok-free.app' #huggingface goes here!!!!
         
         # For TESTING locally, uncomment this line:
         # OLLAMA_URL = os.getenv('OLLAMA_URL', 'http://localhost:11434')
