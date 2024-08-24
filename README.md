@@ -4,7 +4,7 @@
 
 <br>**Features:**</br>
 <br>✨Streamlit for UI/UX and public URL</br>
-<br>📢API handling via FastAPI, ngrok, and Render</br>
+<br>📢API handling via FastAPI, HuggingFaceAPI, and Render</br>
 <br>👩‍🏫AI Chatbot via Ollama llama3:8b</br>
 <br>📋Simple data analysis of a sample data set (Student Grades)</br>
 
