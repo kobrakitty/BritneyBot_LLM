@@ -30,12 +30,17 @@ user_question = st.text_input("Okay let's do this! What's your question about th
 
 if user_question:
     try:
-        # Send request to FastAPI backend
-        response = requests.post(f"{API_URL}/query/", json={"text": user_question})
+        with st.spinner("Britney is thinking... 💭"):
+            # Send request to FastAPI backend
+            response = requests.post(f"{API_URL}/query/", json={"text": user_question}, timeout=60)
         
         if response.status_code == 200:
             # Display the response
-            st.write(response.json()["result"])
+            result = response.json()["result"]
+            if result.strip():
+                st.write(result)
+            else:
+                st.error("Oops! Britney's response was cut off. Please try asking again! 🎤💖")
         else:
             st.error(f"An error occurred while processing your request. Status code: {response.status_code}")
     except requests.RequestException as e:

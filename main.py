@@ -61,13 +61,13 @@ def run_huggingface_model(prompt):
         payload = {
             "inputs": prompt,
             "parameters": {
-                "max_new_tokens": 250,
+                "max_new_tokens": 500,  # Increased from 250
                 "temperature": 0.7,
                 "top_p": 0.95,
                 "do_sample": True
             }
         }
-        response = requests.post(HF_INFERENCE_ENDPOINT, headers=headers, json=payload, timeout=30)
+        response = requests.post(HF_INFERENCE_ENDPOINT, headers=headers, json=payload, timeout=60)  # Increased timeout
         
         response.raise_for_status()
         full_response = response.json()[0]['generated_text']
@@ -83,6 +83,11 @@ def run_huggingface_model(prompt):
         # Remove any partial student data
         if "Student" in britney_response:
             britney_response = britney_response.split("Student")[0].strip()
+        
+        # Ensure the response ends with a complete sentence
+        sentences = britney_response.split('.')
+        if len(sentences) > 1:
+            britney_response = '.'.join(sentences[:-1]) + '.'
         
         return britney_response
     except requests.exceptions.RequestException as e:
