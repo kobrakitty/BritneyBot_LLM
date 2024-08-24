@@ -61,13 +61,13 @@ def run_huggingface_model(prompt):
         payload = {
             "inputs": prompt,
             "parameters": {
-                "max_new_tokens": 500,  # Increased from 250
+                "max_new_tokens": 300,
                 "temperature": 0.7,
                 "top_p": 0.95,
                 "do_sample": True
             }
         }
-        response = requests.post(HF_INFERENCE_ENDPOINT, headers=headers, json=payload, timeout=60)  # Increased timeout
+        response = requests.post(HF_INFERENCE_ENDPOINT, headers=headers, json=payload, timeout=30)
         
         response.raise_for_status()
         full_response = response.json()[0]['generated_text']
@@ -75,30 +75,26 @@ def run_huggingface_model(prompt):
         # Extract only Britney's response
         britney_response = full_response.split("Your response as Britney Spears:")[-1].strip()
         
-        # Remove any remaining prompt text
-        unwanted_text = "Here's the data you're working with:"
-        if unwanted_text in britney_response:
-            britney_response = britney_response.split(unwanted_text)[0].strip()
+        # Remove any remaining prompt text or data
+        unwanted_texts = [
+            "Here's the data you're working with:",
+            "Analyze this data and answer the following question:",
+            "Student Math_Grade Physics_Grade"
+        ]
+        for text in unwanted_texts:
+            if text in britney_response:
+                britney_response = britney_response.split(text)[0].strip()
         
-        # Remove any partial student data
-        if "Student" in britney_response:
-            britney_response = britney_response.split("Student")[0].strip()
-        
-        # Ensure the response ends with a complete sentence
+        # Ensure the response doesn't end abruptly
         sentences = britney_response.split('.')
         if len(sentences) > 1:
-            britney_response = '.'.join(sentences[:-1]) + '.'
+            britney_response = '. '.join(sentences[:-1]) + '.'
         
-        return britney_response
+        return britney_response.strip()
     except requests.exceptions.RequestException as e:
-        logger.error(f"Error communicating with Hugging Face Inference API: {e}")
-        return "Oops! I couldn't reach my brain right now. Try again later, baby! 🎵"
-    except ValueError as e:
-        logger.error(f"Error parsing JSON response: {e}")
-        return "Oops! I got confused with the response. Can you ask me again, sweetie? 🎤"
+        return f"Error communicating with Hugging Face API: {e}"
     except Exception as e:
-        logger.error(f"Unexpected error running Hugging Face model: {e}")
-        return "Something unexpected happened. Let's give it another shot! 💃"
+        return f"Unexpected error: {e}"
 
 def process_query(query: str) -> str:
     if not query.strip():

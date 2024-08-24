@@ -31,25 +31,23 @@ user_question = st.text_input("Okay let's do this! What's your question about th
 if user_question:
     try:
         with st.spinner("Britney is thinking... 💭"):
-            # Send request to FastAPI backend
-            response = requests.post(f"{API_URL}/query/", json={"text": user_question}, timeout=60)
+            response = requests.post(f"{API_URL}/query/", json={"text": user_question}, timeout=30)
         
         if response.status_code == 200:
-            # Display the response
             result = response.json()["result"]
-            if result.strip():
+            if result and len(result) > 20:  # Ensure we have a substantial response
                 st.write(result)
             else:
-                st.error("Oops! Britney's response was cut off. Please try asking again! 🎤💖")
+                st.warning("Oops! Britney's response was too short. Can you try asking again? 🎤💖")
         else:
             st.error(f"An error occurred while processing your request. Status code: {response.status_code}")
     except requests.RequestException as e:
         st.error(f"Unable to reach the API. Error: {e}")
-
+        
 # Display the data
 st.subheader("Student Grades Data📑 ")
 st.dataframe(data)
 
 #Footer styling
-st.write("I am AI bot built by built by Glitter Pile AI using Ollama model llama3. I have been trained to answer questions about this sample data set in a fun and emoji-filled way! Hope you enjoyed your chat with me! xo💋BritneyBot")
+st.write("I am AI bot built by built by Glitter Pile AI using open source Ollama model llama3:8b. I have been trained to answer questions about this sample data set in a fun and emoji-filled way! Hope you enjoyed your chat with me! xo💋BritneyBot")
 st.write("*Visit www.glitterpile.blog for more fun things!*")
