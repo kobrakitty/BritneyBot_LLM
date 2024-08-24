@@ -75,6 +75,15 @@ def run_huggingface_model(prompt):
         # Extract only Britney's response
         britney_response = full_response.split("Your response as Britney Spears:")[-1].strip()
         
+        # Remove any remaining prompt text
+        unwanted_text = "Here's the data you're working with:"
+        if unwanted_text in britney_response:
+            britney_response = britney_response.split(unwanted_text)[0].strip()
+        
+        # Remove any partial student data
+        if "Student" in britney_response:
+            britney_response = britney_response.split("Student")[0].strip()
+        
         return britney_response
     except requests.exceptions.RequestException as e:
         logger.error(f"Error communicating with Hugging Face Inference API: {e}")
