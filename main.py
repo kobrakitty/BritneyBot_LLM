@@ -5,6 +5,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import pandas as pd
 import requests
+from huggingface_hub import HfApi, InferenceApi
 
 app = FastAPI()
 
@@ -26,6 +27,14 @@ except pd.errors.ParserError:
 class Query(BaseModel):
     text: str
 
+# Hugging Face API setup
+hf_api = HfApi()
+HF_API_TOKEN = os.getenv('HF_API_TOKEN')
+HF_INFERENCE_ENDPOINT = os.getenv('HF_INFERENCE_ENDPOINT')
+
+if not HF_API_TOKEN or not HF_INFERENCE_ENDPOINT:
+    raise ValueError("HF_API_TOKEN and HF_INFERENCE_ENDPOINT must be set in environment variables")
+
 # This is the fastAPI welcome page placeholder
 @app.get('/')
 def read_root():
@@ -42,24 +51,29 @@ def query_model(query: Query):
         logger.error(f"Error processing query: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
        
-# This is the ngrok URL API handing via FastAPI
+# This is the Hugging Face Inference API handling
 def run_ollama_model(prompt):
-    """Run the Ollama model on the given prompt."""
+    """Run the Ollama model on the given prompt using Hugging Face Inference API."""
     try:
-        # For DEPLOYMENT, uncomment this line for the ngrok URL - always change this when ngrok restarts with free version:
-        OLLAMA_URL = 'https://762c-2600-1700-f7c1-14d0-cc3c-744c-483a-ce1a.ngrok-free.app' #huggingface goes here!!!!
-        
-        # For TESTING locally, uncomment this line:
-        # OLLAMA_URL = os.getenv('OLLAMA_URL', 'http://localhost:11434')
-        
-        #Request from ngrok to Ollama local server
-        response = requests.post(OLLAMA_URL, json={"text": prompt}, timeout=30)
+        headers = {
+            "Authorization": f"Bearer {HF_API_TOKEN}"
+        }
+        payload = {
+            "inputs": prompt,
+            "parameters": {
+                "max_new_tokens": 250,
+                "temperature": 0.7,
+                "top_p": 0.95,
+                "do_sample": True
+            }
+        }
+        response = requests.post(HF_INFERENCE_ENDPOINT, headers=headers, json=payload, timeout=30)
         
         response.raise_for_status()  # Raises an HTTPError for bad responses
         
-        return response.json().get("result", "")
+        return response.json()[0]['generated_text']
     except requests.exceptions.RequestException as e:
-        logger.error(f"Error communicating with Ollama server: {e}")
+        logger.error(f"Error communicating with Hugging Face Inference API: {e}")
         return "Oops! I couldn't reach my brain right now. Try again later, baby! 🎵"
     except ValueError as e:
         logger.error(f"Error parsing JSON response: {e}")
@@ -99,10 +113,6 @@ def process_query(query: str) -> str:
     Your response as Britney Spears:"""
     
     return run_ollama_model(prompt)
-    
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=10000)
     
 if __name__ == "__main__":
     import uvicorn

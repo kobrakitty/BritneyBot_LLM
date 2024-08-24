@@ -5,3 +5,4 @@ pandas
 python-multipart
 streamlit
 requests
+huggingface_hub
