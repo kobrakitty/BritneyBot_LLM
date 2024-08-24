@@ -5,7 +5,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import pandas as pd
 import requests
-from huggingface_hub import HfApi, InferenceApi
+from huggingface_hub import HfApi
 
 app = FastAPI()
 
@@ -35,12 +35,14 @@ HF_INFERENCE_ENDPOINT = os.getenv('HF_INFERENCE_ENDPOINT')
 if not HF_API_TOKEN or not HF_INFERENCE_ENDPOINT:
     raise ValueError("HF_API_TOKEN and HF_INFERENCE_ENDPOINT must be set in environment variables")
 
-# This is the fastAPI welcome page placeholder
+# Set up logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 @app.get('/')
 def read_root():
     return {"message": "Welcome to Britney's Statistical Paradise! 🎤📊"}
 
-#This defines the query for fastAPI
 @app.post('/query/')
 def query_model(query: Query):
     try:
@@ -50,10 +52,8 @@ def query_model(query: Query):
     except Exception as e:
         logger.error(f"Error processing query: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
-       
-# This is the Hugging Face Inference API handling
-def run_ollama_model(prompt):
-    """Run the Ollama model on the given prompt using Hugging Face Inference API."""
+
+def run_huggingface_model(prompt):
     try:
         headers = {
             "Authorization": f"Bearer {HF_API_TOKEN}"
@@ -69,9 +69,13 @@ def run_ollama_model(prompt):
         }
         response = requests.post(HF_INFERENCE_ENDPOINT, headers=headers, json=payload, timeout=30)
         
-        response.raise_for_status()  # Raises an HTTPError for bad responses
+        response.raise_for_status()
+        full_response = response.json()[0]['generated_text']
         
-        return response.json()[0]['generated_text']
+        # Extract only Britney's response
+        britney_response = full_response.split("Your response as Britney Spears:")[-1].strip()
+        
+        return britney_response
     except requests.exceptions.RequestException as e:
         logger.error(f"Error communicating with Hugging Face Inference API: {e}")
         return "Oops! I couldn't reach my brain right now. Try again later, baby! 🎵"
@@ -79,17 +83,8 @@ def run_ollama_model(prompt):
         logger.error(f"Error parsing JSON response: {e}")
         return "Oops! I got confused with the response. Can you ask me again, sweetie? 🎤"
     except Exception as e:
-        logger.error(f"Unexpected error running Ollama model: {e}")
+        logger.error(f"Unexpected error running Hugging Face model: {e}")
         return "Something unexpected happened. Let's give it another shot! 💃"
-
-# Set up logging
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
-
-# Print system information
-print("Current PATH:", os.environ.get('PATH'))
-print("Current working directory:", os.getcwd())
-print("Operating System:", platform.system())
 
 def process_query(query: str) -> str:
     if not query.strip():
@@ -112,9 +107,13 @@ def process_query(query: str) -> str:
 
     Your response as Britney Spears:"""
     
-    return run_ollama_model(prompt)
-    
+    return run_huggingface_model(prompt)
+
 if __name__ == "__main__":
+    print("Current PATH:", os.environ.get('PATH'))
+    print("Current working directory:", os.getcwd())
+    print("Operating System:", platform.system())
+    
     import uvicorn
     port = int(os.environ.get("PORT", 10000))
     uvicorn.run(app, host="0.0.0.0", port=port)
