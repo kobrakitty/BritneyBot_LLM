@@ -1,26 +1,25 @@
-.env
+#Python
+__pycache__/
+*.py[cod]
+*$py.class
 
-# Python
-      __pycache__/
-      *.py[cod]
-      *$py.class
+# Virtual Environment
+venv/
+ENV/
+.env
       
-      # Virtual Environment
-      venv/
-      ENV/
+# Streamlit
+.streamlit/
       
-      # Streamlit
-      .streamlit/
+# OS generated files
+.DS_Store
+Thumbs.db
       
-      # OS generated files
-      .DS_Store
-      Thumbs.db
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo
       
-      # Editor directories and files
-      .idea/
-      .vscode/
-      *.swp
-      *.swo
-      
-      # Local data files
-      *.csv
+# Local data files
+*.csv

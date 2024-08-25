@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import os
 
-API_URL = os.getenv('API_URL', 'https://britneybot-llm.onrender.com')
+FAST_API_URL = os.getenv('FAST_API_URL', 'https://britneybot-llm.onrender.com')
 
 # Load the data
 @st.cache_data
@@ -31,8 +31,8 @@ user_question = st.text_input("Okay let's do this! What's your question about th
 if user_question:
     try:
         with st.spinner("Britney is thinking...💭"):
-            response = requests.post(f"{API_URL}/query/", json={"text": user_question}, timeout=30)
-        # Only turn on for response issues - off for now
+            response = requests.post(f"{FAST_API_URL}/query/", json={"text": user_question}, timeout=30)
+
         if response.status_code == 200:
             result = response.json()["result"]
             if result and len(result) > 20:  # Ensure we have a substantial response

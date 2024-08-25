@@ -5,9 +5,20 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import pandas as pd
 import requests
-from huggingface_hub import HfApi
 
 app = FastAPI()
+
+# Set up logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
+# Load environment variables
+HF_API_TOKEN = os.getenv('HF_API_TOKEN')
+HF_SERVERLESS_ENDPOINT = os.getenv('HF_SERVERLESS_ENDPOINT')
+
+# API Error handling
+if not HF_API_TOKEN or not HF_SERVERLESS_ENDPOINT:
+    raise ValueError("HF_API_TOKEN and HF_SERVERLESS_ENDPOINT must be set in environment variables")
 
 # Load the CSV data
 csv_file_path = 'studentgrades.csv'
@@ -27,18 +38,6 @@ except pd.errors.ParserError:
 class Query(BaseModel):
     text: str
 
-# Hugging Face API setup
-hf_api = HfApi()
-HF_API_TOKEN = os.getenv('HF_API_TOKEN')
-HF_INFERENCE_ENDPOINT = os.getenv('HF_INFERENCE_ENDPOINT')
-
-if not HF_API_TOKEN or not HF_INFERENCE_ENDPOINT:
-    raise ValueError("HF_API_TOKEN and HF_INFERENCE_ENDPOINT must be set in environment variables")
-
-# Set up logging
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
-
 @app.get('/')
 def read_root():
     return {"message": "Welcome to Britney's Statistical Paradise! 🎤📊"}
@@ -56,18 +55,19 @@ def query_model(query: Query):
 def run_huggingface_model(prompt):
     try:
         headers = {
-            "Authorization": f"Bearer {HF_API_TOKEN}"
+            "Authorization": f"Bearer {HF_API_TOKEN}",
+            "Content-Type": "application/json"
         }
         payload = {
             "inputs": prompt,
             "parameters": {
-                "max_new_tokens": 200, # This attempts to limit the response to about 5-7 sentences, ensuring brevity. Increase this if you want longer responses, or decrease for shorter ones. Adjusting this affects the response length and potentially the API call cost.
+                "max_new_tokens": 300, # This attempts to limit the response to about 5-7 sentences, ensuring brevity. Increase this if you want longer responses, or decrease for shorter ones. Adjusting this affects the response length and potentially the API call cost.
                 "temperature": 0.6, # This attempts to balance creativity with accuracy. This should still allow for Britney's "voice" and emojis while maintaining mathematical correctness. This controls the randomness of the output. Higher values (e.g., 1.0) make output more random, lower values (e.g., 0.2) make it more focused and deterministic. Adjust this based on how creative or precise you want the responses to be.
                 "top_p": 0.90, # This focuses the output a bit more, but still allowing for creative elements. This is for nucleus sampling. It controls the cumulative probability of token selection. Lower values (e.g., 0.5) make the output more focused, higher values (e.g., 0.95) allow for more diversity.You can adjust this in conjunction with temperature to fine-tune the output style.
                 "do_sample": True # This allows for some randomness in the responses. This enables sampling (as opposed to always choosing the most likely next token). You might set this to False if you want more deterministic outputs.
             }
         }
-        response = requests.post(HF_INFERENCE_ENDPOINT, headers=headers, json=payload, timeout=30)
+        response = requests.post(HF_SERVERLESS_ENDPOINT, headers=headers, json=payload, timeout=30)
         
         response.raise_for_status()
         full_response = response.json()[0]['generated_text']
@@ -89,16 +89,19 @@ def run_huggingface_model(prompt):
         sentences = britney_response.split('.')
         if len(sentences) > 1:
             britney_response = '. '.join(sentences[:-1]) + '.'
-        
+            
+# Error handling for response 
         return britney_response.strip()
     except requests.exceptions.RequestException as e:
+        logger.error(f"Error communicating with Hugging Face API: {e}")
         return f"Error communicating with Hugging Face API: {e}"
     except Exception as e:
+        logger.error(f"Unexpected error running Hugging Face model: {e}")
         return f"Unexpected error: {e}"
 
 def process_query(query: str) -> str:
     if not query.strip():
-        return "Oops! You didn't ask me anything, honey! Give me a real question to work with! 🎶"
+        return "Oops! You didn't ask me anything, honey! Give me a new question to work with, please!"
     
     prompt = f"""
     You are the fabulous Britney Spears, pop star diva and statistical analyst with 100 years of experience in this field. When you provide answers, you will write the answer as if you are Britney Spears but keep it brief and to the point. While keeping it relatively breif, you will explain the math as if you are talking to a ten year old using simple terminology. So keep your answer simple. Use a lot of fun emojis throughout your answers and be enthusiastic about everything you write. Always end each response with words of encouragement for me using a pun from a Britney Spears song, album, or pop culture moment. Remember, you are an intelligent, cheerful, EXPERT statistician who explains info in a succinct but joyful way. If you get any questions that are not about the csv file, decline to answer and remind them that you can only answer questions about the Student Grades data set.Stay energetic and positive, and answer questions as accurately as you can. 
