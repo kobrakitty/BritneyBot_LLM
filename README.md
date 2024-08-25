@@ -10,7 +10,7 @@ This project challenged me to build and deploy my first open source LLM API solu
 
 2. ⚡**FastAPI**: A modern, fast (high-performance) web framework for building APIs with Python. In this project, FastAPI is used to create the backend server that handles requests from the Streamlit frontend and communicates with the Hugging Face Inference Endpoint.
 
-3. 🤗**Hugging Face Inference Endpoint**: A cloud-hosted API service that runs open-source machine learning models. For this project, I'm using a dedicated HF Inference Endpoint with an NVidia L4 and the Meta llama3:18b Instruct HLR model, which powers BritneyBot's responses. The FastAPI backend sends prompts to this endpoint and receives the generated text responses. <b>Note:</b> In the future, I'd opt for the Serverless Endpoint, which is free and automatically scales down during inactivity. I chose the dedicated endpoint for this initial project while I was getting familiar with the HF platform and its options. I spent about about $25 on testing, so I guess for this mistake I just have to say...<i>oh, baby, baby, how was I supposed to know...?🎵</i></br>
+3. 🤗**Hugging Face Inference Endpoint**: A cloud-hosted API service that runs open-source machine learning models. For this project, I'm now using the Hugging Face Serverless Inference API with the Meta-Llama-3.1-8B-Instruct model, which powers BritneyBot's responses. The FastAPI backend sends prompts to this API and receives the generated text responses. This serverless option is more cost-effective and automatically scales based on usage. It's a great choice for projects that don't require constant, high-volume inference.
 
 5. 🐳**Docker**: A platform used to develop, ship, and run applications inside containers. In this project, Docker is used to containerize the FastAPI application, ensuring consistent deployment across different environments.
 
@@ -27,11 +27,16 @@ This project challenged me to build and deploy my first open source LLM API solu
 1. The user interacts with the Streamlit frontend, entering questions about the student grades data.
 2. The Streamlit app sends these questions to the FastAPI backend hosted on Render.
 3. The FastAPI backend processes the request, formats the prompt, and sends it to the Hugging Face Inference Endpoint.
-4. The Hugging Face Inference Endpoint generates a response using the hosted language model.
+4. The Hugging Face Serverless Inference API generates a response using the hosted language model.
 5. The FastAPI backend receives the response, processes it to ensure it's in Britney's style, and sends it back to the Streamlit frontend.
 6. The Streamlit frontend displays the response to the user.
 
 This setup allows for a scalable, cloud-based application that leverages modern web technologies and machine learning capabilities to create an engaging user experience. 
+
+## API Usage and Limitations🚦:
+- The Hugging Face Serverless Inference API has usage limits and may have higher latency compared to dedicated endpoints, especially on the first request after a period of inactivity (cold start).
+- Users might experience slight delays in responses during these cold starts.
+- For high-traffic applications, consider monitoring API usage and response times, and be prepared to upgrade to a dedicated endpoint if necessary.
 
 ## Prompt Parameters🎨Helpful Tips:
 You can adjust various elements to fine-tune the personality of BritneyBot!
@@ -42,7 +47,7 @@ Overview:
 
 ## Prompt Parameters🌡️Adjustment Instructions: 
 Adjust the main.py parameters as desired. See current settings and guide:
-1. 🌡️ "max_new_tokens": 200
+1. 🌡️ "max_new_tokens": 300
 - This attempts to limit the response to about 5-7 sentences, ensuring brevity. Increase this if you want longer responses, or decrease for shorter ones. Adjusting this affects the response length and potentially the API call cost.
 2. 🌡️ "temperature": 0.6
 - This attempts to balance creativity with accuracy. This should still allow for Britney's "voice" and emojis while maintaining mathematical correctness. This controls the randomness of the output. Higher values (e.g., 1.0) make output more random, lower values (e.g., 0.2) make it more focused and deterministic. Adjust this based on how creative or precise you want the responses to be.
