@@ -10,17 +10,17 @@ This project challenged me to build and deploy my first open source LLM API solu
 
 2. ⚡**FastAPI**: A modern, fast (high-performance) web framework for building APIs with Python. In this project, FastAPI is used to create the backend server that handles requests from the Streamlit frontend and communicates with the Hugging Face Inference Endpoint.
 
-3. 🤗**Hugging Face Inference Endpoint**: A cloud-hosted API service that runs open-source machine learning models. For this project, I'm using a dedicated HF Inference Endpoint with an NVidia L4 and the Meta llama3:18b Instruct HLR model, which powers BritneyBot's responses. The FastAPI backend sends prompts to this endpoint and receives the generated text responses. In the future, I'd opt for the Serverless Endpoint, which is free and automatically scales down during inactivity. I chose the dedicated endpoint for this initial project while I was getting familiar with the HF platform and its options. (I spent $25 to test it...so I guess you could say, <i>oh, baby, baby, how was I supposed to know...🎵</i>)
+3. 🤗**Hugging Face Inference Endpoint**: A cloud-hosted API service that runs open-source machine learning models. For this project, I'm using a dedicated HF Inference Endpoint with an NVidia L4 and the Meta llama3:18b Instruct HLR model, which powers BritneyBot's responses. The FastAPI backend sends prompts to this endpoint and receives the generated text responses. <b>Note:</b> In the future, I'd opt for the Serverless Endpoint, which is free and automatically scales down during inactivity. I chose the dedicated endpoint for this initial project while I was getting familiar with the HF platform and its options. I spent about about $25 on testing, so I guess for this mistake I just have to say...<i>oh, baby, baby, how was I supposed to know...?🎵</i></br>
 
-4. 🐳**Docker**: A platform used to develop, ship, and run applications inside containers. In this project, Docker is used to containerize the FastAPI application, ensuring consistent deployment across different environments.
+5. 🐳**Docker**: A platform used to develop, ship, and run applications inside containers. In this project, Docker is used to containerize the FastAPI application, ensuring consistent deployment across different environments.
 
-5. ☁️**Render**: A cloud platform used to deploy and host web services. In this project, Render is used to deploy and host the Docker container running the FastAPI backend.
+6. ☁️**Render**: A cloud platform used to deploy and host web services. In this project, Render is used to deploy and host the Docker container running the FastAPI backend.
 
-6.  🪄**Streamlit**: An open-source Python library used to create web applications for machine learning and data science projects. In this project, Streamlit is used to create the frontend user interface where users can interact with BritneyBot.
+7.  🪄**Streamlit**: An open-source Python library used to create web applications for machine learning and data science projects. In this project, Streamlit is used to create the frontend user interface where users can interact with BritneyBot.
 
-7. 🐼**pandas**: A Python library used for data manipulation and analysis. In this project, pandas is used to load and process the student grades data.
+8. 🐼**pandas**: A Python library used for data manipulation and analysis. In this project, pandas is used to load and process the student grades data.
 
-8. 📫**requests**: A Python library used for making HTTP requests. Used in both the FastAPI backend (to communicate with the Hugging Face Inference Endpoint) and the Streamlit frontend (to communicate with the FastAPI backend).
+9. 📫**requests**: A Python library used for making HTTP requests. Used in both the FastAPI backend (to communicate with the Hugging Face Inference Endpoint) and the Streamlit frontend (to communicate with the FastAPI backend).
 
 ## Project Workflow💖:
 
