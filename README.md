@@ -33,22 +33,22 @@ This project challenged me to build and deploy my first open source LLM API solu
 
 This setup allows for a scalable, cloud-based application that leverages modern web technologies and machine learning capabilities to create an engaging user experience. 
 
-## Prompt Parameters🎨- Helpful Tips:
+## Prompt Parameters🎨Helpful Tips:
 You can adjust various elements to fine-tune the personality of BritneyBot!
 Overview:
 - For more creative, varied responses: Increase temperature and top_p.
 - For more focused, consistent responses: Decrease temperature and top_p.
 - For longer or shorter responses: Adjust max_new_tokens.
 
-## Prompt Parameters🌡️ - Adjustment Instructions: 
+## Prompt Parameters🌡️Adjustment Instructions: 
 Adjust the main.py parameters as desired. See current settings and guide:
-🌡️ "max_new_tokens": 200
+1. 🌡️ "max_new_tokens": 200
 - This attempts to limit the response to about 5-7 sentences, ensuring brevity. Increase this if you want longer responses, or decrease for shorter ones. Adjusting this affects the response length and potentially the API call cost.
-🌡️ "temperature": 0.6
+2. 🌡️ "temperature": 0.6
 - This attempts to balance creativity with accuracy. This should still allow for Britney's "voice" and emojis while maintaining mathematical correctness. This controls the randomness of the output. Higher values (e.g., 1.0) make output more random, lower values (e.g., 0.2) make it more focused and deterministic. Adjust this based on how creative or precise you want the responses to be.
-🌡️"top_p": 0.90
+3. 🌡️"top_p": 0.90
 - This focuses the output a bit more, but still allowing for creative elements. This is for nucleus sampling. It controls the cumulative probability of token selection. Lower values (e.g., 0.5) make the output more focused, higher values (e.g., 0.95) allow for more diversity.You can adjust this in conjunction with temperature to fine-tune the output style.
-🌡️ "do_sample": True 
+4. 🌡️ "do_sample": True 
 - This allows for some randomness in the responses. This enables sampling (as opposed to always choosing the most likely next token). You might set this to False if you want more deterministic outputs.
 
 ## 💌Thank You & Contact Info
