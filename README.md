@@ -1,6 +1,10 @@
-# 💃BritneyBot: Pop Star Statistician - Project Components🎤
+# 💃BritneyBot: Pop Star Statistician
 
-<br>This project was a challenging experiment for me to learn how to build and deploy my first open source LLM API solution. From the user perspective, it's a simple chatbot (built on the personality of Britney Spears, of course) with the purpose of analyzing a simple data set, provided by the Lonely Octopus Program. In future iterations, I would like to use more complex data sets, provide the option to download the chat with BritneyBot, and maybe even generate a fun AI image based on the question as a token of participation for the user.</br>
+This project challenged me to build and deploy my first open source LLM API solution. It's a simple data analysis chatbot built on the personality of Britney Spears, which analyzes a small data set of student grades in math and physics. The challenge and data set were provided by the Lonely Octopus Program - thank you to the LO team for your support!
+
+#### <i>Okay, Britney Babes, let's get started!💃</i>
+
+## Project Components🎤
 
 1. 🐍**Python**: The primary programming language used for this project. Python is used for both the backend (FastAPI) and frontend (Streamlit) development.
 
@@ -18,7 +22,7 @@
 
 8. 📫**requests**: A Python library used for making HTTP requests. Used in both the FastAPI backend (to communicate with the Hugging Face Inference Endpoint) and the Streamlit frontend (to communicate with the FastAPI backend).
 
-## 💖Workflow:
+## Project Workflow💖:
 
 1. The user interacts with the Streamlit frontend, entering questions about the student grades data.
 2. The Streamlit app sends these questions to the FastAPI backend hosted on Render.
@@ -29,24 +33,26 @@
 
 This setup allows for a scalable, cloud-based application that leverages modern web technologies and machine learning capabilities to create an engaging user experience. 
 
-## 💌Prompt Parameters - Extra Tips
+## Prompt Parameters🎨- Helpful Tips:
 You can adjust various elements to fine-tune the personality of BritneyBot!
 Overview:
 - For more creative, varied responses: Increase temperature and top_p.
 - For more focused, consistent responses: Decrease temperature and top_p.
 - For longer or shorter responses: Adjust max_new_tokens.
 
-## 🌡️Prompt Parameter Adjustment Instructions: 
+## Prompt Parameters🌡️ - Adjustment Instructions: 
 Adjust the main.py parameters as desired. See current settings and guide:
-1. "max_new_tokens": 200 
+1. "max_new_tokens": 200
 - This attempts to limit the response to about 5-7 sentences, ensuring brevity. Increase this if you want longer responses, or decrease for shorter ones. Adjusting this affects the response length and potentially the API call cost.
-2. "temperature": 0.6
+3. "temperature": 0.6
 - This attempts to balance creativity with accuracy. This should still allow for Britney's "voice" and emojis while maintaining mathematical correctness. This controls the randomness of the output. Higher values (e.g., 1.0) make output more random, lower values (e.g., 0.2) make it more focused and deterministic. Adjust this based on how creative or precise you want the responses to be.
 3. "top_p": 0.90
 - This focuses the output a bit more, but still allowing for creative elements. This is for nucleus sampling. It controls the cumulative probability of token selection. Lower values (e.g., 0.5) make the output more focused, higher values (e.g., 0.95) allow for more diversity.You can adjust this in conjunction with temperature to fine-tune the output style.
 4. "do_sample": True 
 - This allows for some randomness in the responses. This enables sampling (as opposed to always choosing the most likely next token). You might set this to False if you want more deterministic outputs.
 
-## Thank you for visiting BritneyBot! Follow my AI learning journey and glitterpile.blog.🥰xo Kobra Kitty
-
-### Special thanks to the 🐙Lonely Octopus Program🐙, teachers, mentors, and Discord community for all of your support! Learn more about their AI and data science program here: www.lonelyoctopus.com</br>
+## 💌Thank You & Contact Info
+#### <i>Thank you for visiting BritneyBot!</i>
+- Questions? Email glitterpileshop@gmail.com or contact me here at https://github.com/kobrakitty
+- Curious? Follow my AI learning journey and www.glitterpile.blog.
+<br>🥰xo Kobra Kitty</br>
