@@ -30,17 +30,17 @@ user_question = st.text_input("Okay let's do this! What's your question about th
 
 if user_question:
     try:
-        with st.spinner("Britney is thinking... 💭"):
+        with st.spinner("Britney is thinking...💭"):
             response = requests.post(f"{API_URL}/query/", json={"text": user_question}, timeout=30)
-        
-        if response.status_code == 200:
-            result = response.json()["result"]
-            if result and len(result) > 20:  # Ensure we have a substantial response
-                st.write(result)
-            else:
-                st.warning("Oops! Britney's response was too short. Can you try asking again? 🎤💖")
-        else:
-            st.error(f"An error occurred while processing your request. Status code: {response.status_code}")
+#only turn on for response issues - off for now
+ #       if response.status_code == 200:
+ #           result = response.json()["result"]
+ #           if result and len(result) > 20:  # Ensure we have a substantial response
+ #               st.write(result)
+ #           else:
+ #               st.warning("Oops! Britney's response was too short. Can you try asking again? 🎤💖")
+#          else:
+#          st.error(f"An error occurred while processing your request. Status code: {response.status_code}")
     except requests.RequestException as e:
         st.error(f"Unable to reach the API. Error: {e}")
         

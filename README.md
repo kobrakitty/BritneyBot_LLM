@@ -1,6 +1,6 @@
 # 💃BritneyBot: Pop Star Statistician - Project Components🎤📊
 
-<br>This project was a challenging experiment for me to learn how to build and deploy my first open source LLM and API solution. From the user perspective, it's a simple chatbot (built on the personality of Britney Spears, of course) with the purpose of analyzing a simple data set, provided by the Lonely Octopus Program.</br>
+<br>This project was a challenging experiment for me to learn how to build and deploy my first open source LLM API solution. From the user perspective, it's a simple chatbot (built on the personality of Britney Spears, of course) with the purpose of analyzing a simple data set, provided by the Lonely Octopus Program. In future iterations, I would like to use more complex data sets, provide the option to download the chat with BritneyBot, and maybe even generate a fun AI image based on the question as a token of participation for the user.</br>
 
 1. **Python**: The primary programming language used for this project. Python is used for both the backend (FastAPI) and frontend (Streamlit) development.
 
@@ -27,6 +27,6 @@
 5. The FastAPI backend receives the response, processes it to ensure it's in Britney's style, and sends it back to the Streamlit frontend.
 6. The Streamlit frontend displays the response to the user.
 
-This setup allows for a scalable, cloud-based application that leverages modern web technologies and machine learning capabilities to create an engaging user experience.
+This setup allows for a scalable, cloud-based application that leverages modern web technologies and machine learning capabilities to create an engaging user experience. 
 
-🌟Special thanks to the 🐙Lonely Octopus Program🐙, teachers, mentors, and Discord community for all of your support! Learn more about their AI and data science program here: www.lonelyoctopus.com</br>
+Special thanks to the 🐙Lonely Octopus Program🐙, teachers, mentors, and Discord community for all of your support! Learn more about their AI and data science program here: www.lonelyoctopus.com</br>
