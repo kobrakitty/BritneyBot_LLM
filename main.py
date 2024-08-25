@@ -61,10 +61,10 @@ def run_huggingface_model(prompt):
         payload = {
             "inputs": prompt,
             "parameters": {
-                "max_new_tokens": 300,
-                "temperature": 0.7,
-                "top_p": 0.95,
-                "do_sample": True
+                "max_new_tokens": 200, # This attempts to limit the response to about 5-7 sentences, ensuring brevity. Increase this if you want longer responses, or decrease for shorter ones. Adjusting this affects the response length and potentially the API call cost.
+                "temperature": 0.6, # This attempts to balance creativity with accuracy. This should still allow for Britney's "voice" and emojis while maintaining mathematical correctness. This controls the randomness of the output. Higher values (e.g., 1.0) make output more random, lower values (e.g., 0.2) make it more focused and deterministic. Adjust this based on how creative or precise you want the responses to be.
+                "top_p": 0.90, # This focuses the output a bit more, but still allowing for creative elements. This is for nucleus sampling. It controls the cumulative probability of token selection. Lower values (e.g., 0.5) make the output more focused, higher values (e.g., 0.95) allow for more diversity.You can adjust this in conjunction with temperature to fine-tune the output style.
+                "do_sample": True # This allows for some randomness in the responses. This enables sampling (as opposed to always choosing the most likely next token). You might set this to False if you want more deterministic outputs.
             }
         }
         response = requests.post(HF_INFERENCE_ENDPOINT, headers=headers, json=payload, timeout=30)
@@ -75,7 +75,7 @@ def run_huggingface_model(prompt):
         # Extract only Britney's response
         britney_response = full_response.split("Your response as Britney Spears:")[-1].strip()
         
-        # Remove any remaining prompt text or data
+        # Remove any remaining prompt text or data. This was added due to issues with extensive responses including the prompting and process behind the scenes. 
         unwanted_texts = [
             "Here's the data you're working with:",
             "Analyze this data and answer the following question:",
