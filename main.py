@@ -14,11 +14,11 @@ logger = logging.getLogger(__name__)
 
 # Load environment variables
 HF_API_TOKEN = os.getenv('HF_API_TOKEN')
-HF_SERVERLESS_ENDPOINT = os.getenv('HF_SERVERLESS_ENDPOINT')
+HF_API_URL = "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3.1-8B"
 
 # API Error handling
-if not HF_API_TOKEN or not HF_SERVERLESS_ENDPOINT:
-    raise ValueError("HF_API_TOKEN and HF_SERVERLESS_ENDPOINT must be set in environment variables")
+if not HF_API_TOKEN:
+    raise ValueError("HF_API_TOKEN must be set in environment variables")
 
 # Load the CSV data
 csv_file_path = 'studentgrades.csv'
@@ -67,7 +67,12 @@ def run_huggingface_model(prompt):
                 "do_sample": True # This allows for some randomness in the responses. This enables sampling (as opposed to always choosing the most likely next token). You might set this to False if you want more deterministic outputs.
             }
         }
-        response = requests.post(HF_SERVERLESS_ENDPOINT, headers=headers, json=payload, timeout=30)
+        response = requests.post(HF_API_URL, headers=headers, json=payload, timeout=30)
+        
+        # Add detailed logging
+        logger.debug(f"API Response Status Code: {response.status_code}")
+        logger.debug(f"API Response Headers: {response.headers}")
+        logger.debug(f"API Response Content: {response.text}")
         
         response.raise_for_status()
         full_response = response.json()[0]['generated_text']
@@ -90,8 +95,10 @@ def run_huggingface_model(prompt):
         if len(sentences) > 1:
             britney_response = '. '.join(sentences[:-1]) + '.'
             
-# Error handling for response 
         return britney_response.strip()
+    except requests.exceptions.HTTPError as e:
+        logger.error(f"HTTP Error: {e}")
+        return f"Error: The API returned a {e.response.status_code} status code. Please check your API token and permissions."
     except requests.exceptions.RequestException as e:
         logger.error(f"Error communicating with Hugging Face API: {e}")
         return f"Error communicating with Hugging Face API: {e}"
